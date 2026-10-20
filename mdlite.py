@@ -38,3 +38,15 @@ def parse_list(lines, i, pattern, tag):
         items.append(f"<li>{render_inline(match.group(1))}</li>")
         i += 1
     return f"<{tag}>\n" + "\n".join(items) + f"\n</{tag}>", i
+
+
+def parse_code(lines, i):
+    lang = FENCE.match(lines[i]).group(1)
+    body = []
+    i += 1
+    while i < len(lines) and not FENCE.match(lines[i]):
+        body.append(lines[i])
+        i += 1
+    attr = f' class="language-{lang}"' if lang else ""
+    code = html.escape("\n".join(body), quote=False)
+    return f"<pre><code{attr}>{code}</code></pre>", i + 1
