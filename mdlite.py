@@ -65,3 +65,11 @@ def starts_block(line):
         HEADING.match(line) or FENCE.match(line) or HR.match(line)
         or UL_ITEM.match(line) or OL_ITEM.match(line) or line.startswith(">")
     )
+
+
+def parse_paragraph(lines, i):
+    para = []
+    while i < len(lines) and lines[i].strip() and (not para or not starts_block(lines[i])):
+        para.append(lines[i])
+        i += 1
+    return f"<p>{render_inline(chr(10).join(para))}</p>", i
