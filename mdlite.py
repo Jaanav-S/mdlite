@@ -106,3 +106,17 @@ def render(source):
             block, i = parse_paragraph(lines, i)
             out.append(block)
     return "\n".join(out)
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv:
+        with open(argv[0], encoding="utf-8") as fh:
+            source = fh.read()
+    else:
+        source = sys.stdin.read()
+    print(render(source))
+
+
+if __name__ == "__main__":
+    main()
