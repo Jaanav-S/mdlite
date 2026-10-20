@@ -58,3 +58,10 @@ def parse_quote(lines, i):
         inner.append(lines[i][1:].removeprefix(" "))
         i += 1
     return f"<blockquote>\n{render(chr(10).join(inner))}\n</blockquote>", i
+
+
+def starts_block(line):
+    return bool(
+        HEADING.match(line) or FENCE.match(line) or HR.match(line)
+        or UL_ITEM.match(line) or OL_ITEM.match(line) or line.startswith(">")
+    )
