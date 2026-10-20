@@ -50,3 +50,11 @@ def parse_code(lines, i):
     attr = f' class="language-{lang}"' if lang else ""
     code = html.escape("\n".join(body), quote=False)
     return f"<pre><code{attr}>{code}</code></pre>", i + 1
+
+
+def parse_quote(lines, i):
+    inner = []
+    while i < len(lines) and lines[i].startswith(">"):
+        inner.append(lines[i][1:].removeprefix(" "))
+        i += 1
+    return f"<blockquote>\n{render(chr(10).join(inner))}\n</blockquote>", i
