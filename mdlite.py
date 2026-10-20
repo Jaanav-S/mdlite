@@ -73,3 +73,36 @@ def parse_paragraph(lines, i):
         para.append(lines[i])
         i += 1
     return f"<p>{render_inline(chr(10).join(para))}</p>", i
+
+
+def render(source):
+    """Convert a Markdown string to HTML."""
+    lines = source.replace("\r\n", "\n").split("\n")
+    out, i = [], 0
+    while i < len(lines):
+        line = lines[i]
+        if not line.strip():
+            i += 1
+        elif m := HEADING.match(line):
+            level = len(m.group(1))
+            out.append(f"<h{level}>{render_inline(m.group(2))}</h{level}>")
+            i += 1
+        elif FENCE.match(line):
+            block, i = parse_code(lines, i)
+            out.append(block)
+        elif HR.match(line):
+            out.append("<hr>")
+            i += 1
+        elif UL_ITEM.match(line):
+            block, i = parse_list(lines, i, UL_ITEM, "ul")
+            out.append(block)
+        elif OL_ITEM.match(line):
+            block, i = parse_list(lines, i, OL_ITEM, "ol")
+            out.append(block)
+        elif line.startswith(">"):
+            block, i = parse_quote(lines, i)
+            out.append(block)
+        else:
+            block, i = parse_paragraph(lines, i)
+            out.append(block)
+    return "\n".join(out)
