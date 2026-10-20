@@ -27,3 +27,14 @@ def render_inline(text):
     text = re.sub(r"(?<!\*)\*(?!\s)(.+?)(?<!\s)\*(?!\*)", r"<em>\1</em>", text)
     text = re.sub(r"  \n", "<br>\n", text)
     return re.sub(r"\x00(\d+)\x00", lambda m: spans[int(m.group(1))], text)
+
+
+def parse_list(lines, i, pattern, tag):
+    items = []
+    while i < len(lines):
+        match = pattern.match(lines[i])
+        if not match:
+            break
+        items.append(f"<li>{render_inline(match.group(1))}</li>")
+        i += 1
+    return f"<{tag}>\n" + "\n".join(items) + f"\n</{tag}>", i
