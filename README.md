@@ -40,3 +40,9 @@ literally rather than injected.
 ```
 python -m pytest
 ```
+
+## Not supported (yet)
+
+- Nested lists
+- Tables
+- Reference-style links
