@@ -37,3 +37,11 @@ def test_ordered_list():
 def test_code_fence():
     out = render("```py\nx = 1 < 2\n```")
     assert out == '<pre><code class="language-py">x = 1 &lt; 2</code></pre>'
+
+
+def test_blockquote():
+    assert render("> quoted *text*") == "<blockquote>\n<p>quoted <em>text</em></p>\n</blockquote>"
+
+
+def test_horizontal_rule():
+    assert render("a\n\n---\n\nb") == "<p>a</p>\n<hr>\n<p>b</p>"
