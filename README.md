@@ -26,3 +26,11 @@ Or from Python:
 from mdlite import render
 html = render("# Hello\n\nSome *text*.")
 ```
+
+## Design
+
+Rendering happens in two passes. The block pass walks the document line by
+line and groups lines into headings, lists, code blocks and paragraphs.
+The inline pass then formats the text inside each block. All text is
+HTML-escaped before inline formatting, so raw HTML in the input is shown
+literally rather than injected.
