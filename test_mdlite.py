@@ -20,3 +20,11 @@ def test_inline_code_is_not_formatted():
 
 def test_links():
     assert render_inline("[site](https://example.com)") == '<a href="https://example.com">site</a>'
+
+
+def test_html_is_escaped():
+    assert render_inline("<script>") == "&lt;script&gt;"
+
+
+def test_unordered_list():
+    assert render("- a\n- b") == "<ul>\n<li>a</li>\n<li>b</li>\n</ul>"
