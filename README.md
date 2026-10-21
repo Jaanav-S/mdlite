@@ -12,3 +12,17 @@ parsing. No dependencies.
 - Unordered (`-`, `*`) and ordered (`1.`) lists
 - Fenced code blocks with an optional language
 - Blockquotes and horizontal rules
+
+## Usage
+
+```
+python mdlite.py notes.md > notes.html
+cat notes.md | python mdlite.py
+```
+
+Or from Python:
+
+```python
+from mdlite import render
+html = render("# Hello\n\nSome *text*.")
+```
