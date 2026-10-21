@@ -28,3 +28,12 @@ def test_html_is_escaped():
 
 def test_unordered_list():
     assert render("- a\n- b") == "<ul>\n<li>a</li>\n<li>b</li>\n</ul>"
+
+
+def test_ordered_list():
+    assert render("1. a\n2. b") == "<ol>\n<li>a</li>\n<li>b</li>\n</ol>"
+
+
+def test_code_fence():
+    out = render("```py\nx = 1 < 2\n```")
+    assert out == '<pre><code class="language-py">x = 1 &lt; 2</code></pre>'
